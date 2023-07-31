@@ -12,8 +12,9 @@ body {
     justify-content: center;
 
     width: 250px;
-    background-color: #401F59;
     height: 100vh;
+    overflow-y: auto;
+    background-color: #401F59;
     float: left;
 }
 

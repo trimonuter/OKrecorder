@@ -11,8 +11,14 @@ addTopic.addEventListener('click', function() {
     const cardList = document.querySelectorAll(".topic-card")
     cardList.forEach(card => {
         card.addEventListener("click", () => {
-            cardList.forEach(x => x.classList.remove("card-clicked"));
+            cardList.forEach(x => {
+                x.classList.remove("card-clicked");
+                const sibling = x.previousElementSibling;
+
+                sibling.style.color = "grey";
+            });
             card.classList.add("card-clicked");
+            card.previousElementSibling.style.color = "white";
         })
     })
 })

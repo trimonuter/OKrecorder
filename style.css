@@ -17,10 +17,22 @@ body {
     float: left;
 }
 
+.topic-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.pointer {
+    font-size: 20px;
+    color: grey;
+}
+
 .topic-card, #add-topic {
     padding: 1px;
     padding-left: 15px;
     margin: 20px 0;
+    flex: 1;
     
     background-color: #2A1C4F;
     border-radius: 20px;

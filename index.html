@@ -16,17 +16,24 @@
             <h3 id="plus">+</h3>
             <h3>Add a topic</h3>
         </div>
-        <div>
+        <div id="topics-section">
             <template id="topic-template">
                 <div class="topic-container">
                     <div class="pointer">
                         <h1>>></h1>
                     </div>
                     <div class="topic-card">
-                        <h3>Topic title</h3>
+                        <h3 class="topic-title">Topic title</h3>
                     </div>
                 </div>
             </template>
+        </div>
+    </div>
+    <div id="topicNameContainer">
+        <div id="topicNamePopup">
+            <h2>Enter your topic name:</h2>
+            <input type="text" id="inputTopicName" autocomplete="off"/>
+            <button id="submitTopicName">Submit</button>
         </div>
     </div>
 

@@ -1,21 +1,42 @@
 body {
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: row;
+
+
     background-color: #3c1b43;
     font-family: 'Archivo Narrow', sans-serif;
     color: white;
 }
 
 #sidebar {
-    padding: 25px;
-    margin: 0 auto;
-    justify-content: center;
-
     width: 250px;
     height: 100vh;
+    float: left;
+    margin: 0;
+    padding: 25px;
+    padding-top: 0px;
+    justify-content: center;
+    
     overflow-y: auto;
     background-color: #401F59;
-    float: left;
+}
+
+#logo {
+    height: 72px;
+    align-items: center;
+
+    background-color: #2e1c92;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+#logo h2 {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .topic-container {
@@ -120,6 +141,19 @@ body {
 }
 
 #main {
-    margin-left: 250px;
-    padding: 20px;
+    flex: 1;
+}
+
+header {
+    margin: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
+    background-color: #681c92;
+}
+
+header h2 {
+    display: flex;
+    margin: 0;
+    justify-content: center;
 }

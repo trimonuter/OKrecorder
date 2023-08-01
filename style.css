@@ -110,6 +110,25 @@ body {
     border-radius: 5px;
 }
 
+#popup-header {
+    margin-bottom: 7px;
+    display: flex;
+    justify-content: end;
+}
+
+#cancel-popup {
+    margin: 0;
+    padding: 0 7px 5px 5px;
+
+    background-color: red;
+    border-radius: 5px;
+}
+
+#cancel-popup:hover {
+    cursor: pointer;
+    transform: scale(115%);
+}
+
 #topicNamePopup h2 {
     margin-top: 0;
 }

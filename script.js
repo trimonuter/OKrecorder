@@ -13,6 +13,11 @@ addTopic.addEventListener('click', () => {
     popup.style.display = "flex";
 })
 
+const cancelPopup = document.getElementById("cancel-popup");
+cancelPopup.addEventListener('click', () => {
+    popup.style.display = "none"
+})
+
 const button = document.getElementById("submitTopicName");
 button.addEventListener("click", function(){
     const inputName = document.getElementById("inputTopicName").value;

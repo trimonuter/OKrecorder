@@ -1,6 +1,7 @@
 const sidebar = document.getElementById('sidebar');
 const addTopic = document.getElementById('add-topic');
 const topicsSection = document.getElementById('topics-section');
+const writeNoteBG = document.getElementById('writeNoteBackground');
 
 function cloneTopic(title) {
     const clone = document.querySelector('#topic-template').content.cloneNode(true);
@@ -26,6 +27,7 @@ cancelPopup.addEventListener('click', () => {
 document.addEventListener('keydown', (event) => {
     if (event.keyCode === 27) {
         popup.style.display = "none";
+        writeNoteBG.style.display = 'none';
     }
 })
 
@@ -39,6 +41,18 @@ document.addEventListener('keydown', (event) => {
     if (event.keyCode === 13) {
         appendTopic();
     }
+})
+
+// Write a note
+const writeNoteButton = document.getElementById('createNote');
+writeNoteButton.addEventListener('click', () => {
+    writeNoteBG.style.display = 'flex';
+}) 
+
+// Cancel writing note
+const cancelNote = document.getElementById('cancelWrite');
+cancelNote.addEventListener('click', () => {
+    writeNoteBG.style.display = 'none';
 })
 
 // Helper Functions

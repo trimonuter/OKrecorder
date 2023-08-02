@@ -41,7 +41,7 @@ document.addEventListener('keydown', (event) => {
     }
 })
 
-// Helper functions
+// Helper Functions
 function appendTopic(){
     const inputName = document.getElementById("inputTopicName").value;
     topicsSection.append(cloneTopic(inputName));

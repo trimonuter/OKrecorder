@@ -1,8 +1,9 @@
-body {
+html, body {
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: row;
+    height: 100%;
 
 
     background-color: #3c1b43;
@@ -285,4 +286,57 @@ header h2 {
     margin: 10px;
 
     font-size: 30px;
+}
+
+#user-post {
+    margin-top: 30px;
+    margin-left: 40px;
+}
+
+.user-header {
+    display: flex;
+    align-items: center;
+}
+
+.user-header * {
+    margin: 0;
+}
+
+.profile-picture {
+    padding: 10px;
+
+    background-color: black;
+    border-radius: 50%;
+}
+
+.profile-picture * {
+    margin: 0;
+    display: flex;
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+}
+
+.username {
+    margin-left: 10px;
+    padding: 5px;
+
+    /* background-color: blue; */
+    border-radius: 8px;
+}
+
+.post {
+    display: inline-block;
+    margin-top: 15px;
+    margin-right: 50px;
+    padding: 10px;
+
+    background-color: #E2A7EE;
+    color: black;
+    border-radius: 10px;
+}
+
+.post * {
+    margin: 0;
 }

@@ -57,6 +57,7 @@ body {
     flex: 1;
     
     background-color: #2A1C4F;
+    border: 5px solid #2A1C4F;
     border-radius: 20px;
     cursor: pointer;
 }
@@ -67,13 +68,20 @@ body {
     font-size: 30px;
 }
 
-.topic-card:hover, #add-topic:hover {
-    transform: scale(107%);
+.topic-card:hover {
+    border: 5px solid white;
 }
 
 #add-topic {
     display: flex;
     background-color: #d46d12;
+    border: 5px solid #d46d12;
+}
+
+#add-topic:hover {
+    background-color: black;
+    color: #d46d12;
+    border: 5px solid white;
 }
 
 .card-clicked {
@@ -83,6 +91,7 @@ body {
     
     background-color: white;
     color: black;
+    border: 5px solid white;
     border-radius: 20px;
     cursor: pointer;
 }
@@ -122,11 +131,13 @@ body {
 
     background-color: red;
     border-radius: 5px;
+    transition: 0.15s;
 }
 
 #cancel-popup:hover {
     cursor: pointer;
-    transform: scale(115%);
+    background-color: white;
+    color: red;
 }
 
 #topicNamePopup h2 {
@@ -152,10 +163,12 @@ body {
     color: white;
     font-family: 'Archivo Narrow', sans-serif;
     font-size: 20px;
+    transition: 0.15s;
 }
 
 #submitTopicName:hover {
-    transform: scale(107%);
+    background-color: white;
+    color: #d46d12;
     cursor: pointer;
 }
 
@@ -259,7 +272,6 @@ header h2 {
     color: black;
     border-radius: 10px;
     border: 5px solid rgb(147, 141, 141);
-    transition: 0.3s;
 }
 
 #createNote:hover {
@@ -270,7 +282,6 @@ header h2 {
 }
 
 #createNote h2 {
-    /* padding: 10px; */
     margin: 10px;
 
     font-size: 30px;

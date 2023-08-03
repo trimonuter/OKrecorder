@@ -205,15 +205,33 @@ header h2 {
     width: 800px;
 }
 
-#cancelWrite {
+#writeNoteButtons {
+    display: flex;
+}
+
+#cancelWrite, #submitWrite {
     padding: 5px;
 
     background-color: red;
     border-radius: 7px;
+    transition: 0.15s;
+}
+
+#submitWrite {
+    margin-right: 9px;
+
+    background-color: blue;
 }
 
 #cancelWrite:hover {
-    transform: scale(110%);
+    background-color: white;
+    color: red;
+    cursor: pointer;
+}
+
+#submitWrite:hover {
+    background-color: white;
+    color: blue;
     cursor: pointer;
 }
 

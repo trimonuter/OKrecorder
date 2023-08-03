@@ -243,6 +243,9 @@ header h2 {
     height: 600px;
 
     outline: none;
+    background-color: #E2A7EE;
+    border-radius: 10px;
+
     font-family: 'Archivo Narrow', sans-serif;
     font-size: 40px;
 }

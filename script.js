@@ -56,6 +56,18 @@ cancelNote.addEventListener('click', () => {
     writeNoteBG.style.display = 'none';
 })
 
+// Tab button add indentation when writing a note
+const writeNote = document.getElementById('writeNote');
+writeNote.addEventListener('keydown', (event) => {
+    if (event.keyCode === 9) {
+        event.preventDefault();
+        const start = writeNote.selectionStart;
+        const end = writeNote.selectionEnd;
+
+        writeNote.setRangeText('\t', start, end, 'end');
+    }
+})
+
 // Helper Functions
 function appendTopic(){
     const inputName = document.getElementById("inputTopicName").value;

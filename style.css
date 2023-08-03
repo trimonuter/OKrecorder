@@ -243,6 +243,8 @@ header h2 {
     height: 600px;
 
     outline: none;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 40px;
 }
 
 #createNote {

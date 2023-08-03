@@ -38,8 +38,9 @@ button.addEventListener("click", function(){
 })
 
 document.addEventListener('keydown', (event) => {
-    if (event.keyCode === 13) {
+    if ((event.keyCode === 13) && (popup.style.display === "flex")) {
         appendTopic();
+        document.getElementById("inputTopicName").value = "";
     }
 })
 

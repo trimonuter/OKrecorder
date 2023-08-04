@@ -226,6 +226,26 @@ header h2 {
     width: 800px;
 }
 
+#yourNameContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#yourNameContainer * {
+    margin: 0;
+}
+
+#yourName {
+    margin-top: 5px;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 15px;
+}
+
+#yourName:focus {
+    outline: none;
+}
+
 #writeNoteButtons {
     display: flex;
 }

@@ -24,13 +24,11 @@ connectToDB((err) => {
 
 // Routes
 app.get('/notes', (req, res) => {
-    let allNotes = [];
-    
     db.collection('notes')
         .find()
-        .forEach(note => allNotes.push(note))
-        .then(() => {
-            res.status(200).json(allNotes);
+        .toArray()
+        .then(data => {
+            res.status(200).json(data);
         })
         .catch(() => {
             res.status(500).json({error: 'Could not fetch documents'})

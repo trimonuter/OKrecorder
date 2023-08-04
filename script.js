@@ -83,12 +83,15 @@ writeNote.addEventListener('keydown', (event) => {
 // Submit note
 const main = document.getElementById('main');
 const submitWrite = document.getElementById('submitWrite');
+const yourName = document.getElementById('yourName');
 submitWrite.addEventListener('click', () => {
+    const user = yourName.value;
     const text = writeNote.value;
+    yourName.value = ""
     writeNote.value = "";
-    appendNote(text);
+    appendNote(user, text);
 
-    writeNoteToDatabase(text);
+    writeNoteToDatabase(user, text);
     writeNoteBG.style.display = 'none';
 })
 
@@ -130,12 +133,12 @@ function refreshCards() {
                 })
 }
 
-function writeNoteToDatabase(text) {
+function writeNoteToDatabase(user, text) {
     fetch('http://localhost:3000/notes', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            'user': 'Thom Yorke',
+            'user': user,
             'text': text
         })
     })

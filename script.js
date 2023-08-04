@@ -73,6 +73,7 @@ const main = document.getElementById('main');
 const submitWrite = document.getElementById('submitWrite');
 submitWrite.addEventListener('click', () => {
     appendNote();
+    writeNoteBG.style.display = 'none';
 })
 
 // Helper Functions
@@ -86,7 +87,7 @@ function appendTopic(){
 
 function appendNote() {
     const clone = document.getElementById("post").content.cloneNode(true);
-    main.append(clone)
+    main.append(clone);
 }
 
 function refreshCards() {

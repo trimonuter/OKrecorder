@@ -44,6 +44,18 @@ document.addEventListener('keydown', (event) => {
     }
 })
 
+// Load notes
+fetch('http://localhost:3000/notes')
+    .then(response => response.json())
+    .then(data => [
+        data.forEach(obj => {
+            appendNote(obj.user, obj.text);   
+        })
+    ])
+    .catch(error => {
+        console.error('Error: ', error);
+    })
+
 // Write a note
 const writeNoteButton = document.getElementById('createNote');
 writeNoteButton.addEventListener('click', () => {
@@ -72,7 +84,12 @@ writeNote.addEventListener('keydown', (event) => {
 const main = document.getElementById('main');
 const submitWrite = document.getElementById('submitWrite');
 submitWrite.addEventListener('click', () => {
-    appendNote();
+    const text = writeNote.value;
+    writeNote.value = "";
+    appendNote(text);
+
+    writeNoteToDatabase(text);
+    writeNoteBG.style.display = 'none';
 })
 
 
@@ -85,19 +102,16 @@ function appendTopic(){
     refreshCards();
 }
 
-function appendNote() {
+function appendNote(user, text) {
     const clone = document.getElementById("post").content.cloneNode(true);
-    const text = writeNote.value;
-    writeNote.value = "";
-
+    const username = clone.querySelector('.username');
     postText = clone.querySelector(".post-text h2");
+
     postText.textContent = text;
-    writeNoteToDatabase(text);
+    username.textContent = user;
 
     postText.style.whiteSpace = "pre-wrap";
     main.append(clone);
-
-    writeNoteBG.style.display = 'none';
 }
 
 function refreshCards() {

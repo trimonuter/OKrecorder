@@ -94,7 +94,6 @@ function appendNote() {
 
     postText.style.whiteSpace = "pre-wrap";
     main.append(clone);
-    console.log(text)
 
     writeNoteBG.style.display = 'none';
 }

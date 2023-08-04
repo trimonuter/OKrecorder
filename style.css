@@ -13,12 +13,11 @@ html, body {
 
 #sidebar {
     width: 250px;
-    height: 100vh;
-    float: left;
+    display: flex;
+    flex-direction: column;
     margin: 0;
     padding: 25px;
     padding-top: 0px;
-    justify-content: center;
     
     overflow-y: auto;
     background-color: #401F59;
@@ -75,6 +74,8 @@ html, body {
 
 #add-topic {
     display: flex;
+    max-height: 60px;
+
     background-color: #d46d12;
     border: 5px solid #d46d12;
 }
@@ -83,6 +84,12 @@ html, body {
     background-color: black;
     color: #d46d12;
     border: 5px solid white;
+}
+
+#add-topic * {
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .card-clicked {

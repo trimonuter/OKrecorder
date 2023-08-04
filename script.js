@@ -75,6 +75,7 @@ submitWrite.addEventListener('click', () => {
     appendNote();
 })
 
+
 // Helper Functions
 function appendTopic(){
     const inputName = document.getElementById("inputTopicName").value;
@@ -91,6 +92,7 @@ function appendNote() {
 
     postText = clone.querySelector(".post-text h2");
     postText.textContent = text;
+    writeNoteToDatabase(text);
 
     postText.style.whiteSpace = "pre-wrap";
     main.append(clone);
@@ -112,4 +114,15 @@ function refreshCards() {
                         card.previousElementSibling.style.color = "white";
                     })
                 })
+}
+
+function writeNoteToDatabase(text) {
+    fetch('http://localhost:3000/notes', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            'user': 'Thom Yorke',
+            'text': text
+        })
+    })
 }

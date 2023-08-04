@@ -64,7 +64,7 @@ writeNote.addEventListener('keydown', (event) => {
         const start = writeNote.selectionStart;
         const end = writeNote.selectionEnd;
 
-        writeNote.setRangeText('\t', start, end, 'end');
+        writeNote.setRangeText('    ', start, end, 'end');
     }
 })
 
@@ -73,7 +73,6 @@ const main = document.getElementById('main');
 const submitWrite = document.getElementById('submitWrite');
 submitWrite.addEventListener('click', () => {
     appendNote();
-    writeNoteBG.style.display = 'none';
 })
 
 // Helper Functions
@@ -87,7 +86,17 @@ function appendTopic(){
 
 function appendNote() {
     const clone = document.getElementById("post").content.cloneNode(true);
+    const text = writeNote.value;
+    writeNote.value = "";
+
+    postText = clone.querySelector(".post-text h2");
+    postText.textContent = text;
+
+    postText.style.whiteSpace = "pre-wrap";
     main.append(clone);
+    console.log(text)
+
+    writeNoteBG.style.display = 'none';
 }
 
 function refreshCards() {

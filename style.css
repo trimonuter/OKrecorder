@@ -326,7 +326,7 @@ header h2 {
     border-radius: 8px;
 }
 
-.post {
+.post-text {
     display: inline-block;
     margin-top: 15px;
     margin-right: 50px;
@@ -337,6 +337,6 @@ header h2 {
     border-radius: 10px;
 }
 
-.post * {
+.post-text * {
     margin: 0;
 }

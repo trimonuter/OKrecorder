@@ -68,6 +68,13 @@ writeNote.addEventListener('keydown', (event) => {
     }
 })
 
+// Submit note
+const main = document.getElementById('main');
+const submitWrite = document.getElementById('submitWrite');
+submitWrite.addEventListener('click', () => {
+    appendNote();
+})
+
 // Helper Functions
 function appendTopic(){
     const inputName = document.getElementById("inputTopicName").value;
@@ -75,6 +82,11 @@ function appendTopic(){
     
     popup.style.display = "none";
     refreshCards();
+}
+
+function appendNote() {
+    const clone = document.getElementById("post").content.cloneNode(true);
+    main.append(clone)
 }
 
 function refreshCards() {

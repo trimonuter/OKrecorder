@@ -315,6 +315,22 @@ header h2 {
     font-size: 30px;
 }
 
+#branch-container {
+    margin-left: 40px;
+    display: flex;
+}
+
+#branch-container * {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#branch {
+    margin-left: 10px;
+
+    color: yellow;
+}
+
 .user-post {
     margin-top: 30px;
     margin-left: 40px;

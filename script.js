@@ -117,6 +117,7 @@ function appendNote(user, text) {
     main.append(clone);
 }
 
+const branchName = document.getElementById('branch');
 function refreshCards() {
     const cardList = document.querySelectorAll(".topic-card")
     cardList.forEach(card => {
@@ -129,6 +130,10 @@ function refreshCards() {
                         });
                         card.classList.add("card-clicked");
                         card.previousElementSibling.style.color = "white";
+
+                        const branch = card.querySelector('.topic-title').textContent;
+                        branchName.textContent = branch;
+
                     })
                 })
 }

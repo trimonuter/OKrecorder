@@ -23,6 +23,22 @@ connectToDB((err) => {
 })
 
 // Routes
+app.get('/allNotes', (req, res) => {
+    const colName = req.query.name;
+    db.listCollections()
+        .toArray()
+        .some(collection => collection.name === colName)
+        .then(bool => {
+            res.status(200).json({
+                collectionExists: bool
+            })
+        })
+        .catch(() => {
+            res.status(500).json({error: 'Could not send bool data'})
+        })
+        
+})
+
 app.get('/notes', (req, res) => {
     db.collection('notes')
         .find()

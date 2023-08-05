@@ -39,6 +39,17 @@ app.get('/allNotes', (req, res) => {
         
 })
 
+app.get('/createCollection', (req, res) => {
+    const colName = req.query.name;
+    db.createCollection(colName)
+        .then(() => {
+            console.log('Successfully created collection');
+        })
+        .catch(() => {
+            console.log('Failed to create database')
+        })
+})
+
 app.get('/notes', (req, res) => {
     db.collection('notes')
         .find()

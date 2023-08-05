@@ -2,6 +2,7 @@ const sidebar = document.getElementById('sidebar');
 const addTopic = document.getElementById('add-topic');
 const topicsSection = document.getElementById('topics-section');
 const writeNoteBG = document.getElementById('writeNoteBackground');
+const branchName = document.getElementById('branch');
 
 function cloneTopic(title) {
     const clone = document.querySelector('#topic-template').content.cloneNode(true);
@@ -34,15 +35,33 @@ document.addEventListener('keydown', (event) => {
 // Submit topic name
 const button = document.getElementById("submitTopicName");
 button.addEventListener("click", function(){
-    appendTopic();
+    const topicName = document.getElementById("inputTopicName").value;
+
+    appendTopic(topicName);
+    document.getElementById("inputTopicName").value = "";
+    createCollection(topicName);
 })
 
 document.addEventListener('keydown', (event) => {
     if ((event.keyCode === 13) && (popup.style.display === "flex")) {
-        appendTopic();
+        const topicName = document.getElementById("inputTopicName").value;
+
+        appendTopic(topicName);
         document.getElementById("inputTopicName").value = "";
+        createCollection(topicName);
     }
 })
+
+function createCollection(name) {
+    name = name.replace(' ', '-')
+    fetch(`http://localhost:3000/createCollection?name=notes/${name}`)
+        .then(() => {
+            console.log('Created collection from frontend');
+        })
+        .catch(error => {
+            console.log('Failed to create collection from frontend')
+        })
+}
 
 // Load notes
 fetch('http://localhost:3000/notes')
@@ -97,9 +116,8 @@ submitWrite.addEventListener('click', () => {
 
 
 // Helper Functions
-function appendTopic(){
-    const inputName = document.getElementById("inputTopicName").value;
-    topicsSection.append(cloneTopic(inputName));
+function appendTopic(name){
+    topicsSection.append(cloneTopic(name));
     
     popup.style.display = "none";
     refreshCards();
@@ -117,7 +135,6 @@ function appendNote(user, text) {
     main.append(clone);
 }
 
-const branchName = document.getElementById('branch');
 function refreshCards() {
     const cardList = document.querySelectorAll(".topic-card")
     cardList.forEach(card => {

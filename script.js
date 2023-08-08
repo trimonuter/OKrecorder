@@ -2,7 +2,9 @@ const sidebar = document.getElementById('sidebar');
 const addTopic = document.getElementById('add-topic');
 const topicsSection = document.getElementById('topics-section');
 const writeNoteBG = document.getElementById('writeNoteBackground');
-const branchName = document.getElementById('branch');
+
+const branchElement = document.getElementById('branch');
+let branch = branchElement.textContent;
 
 function cloneTopic(title) {
     const clone = document.querySelector('#topic-template').content.cloneNode(true);
@@ -10,13 +12,19 @@ function cloneTopic(title) {
     return clone;
 }
 
+// Load topics from database
+fetch('http://localhost:3000/topics')
+    .then(res => res.json())
+    .then(data => {
+        data.forEach(obj => appendTopic(obj.topicName))
+    })
+
 // Add topic button pressed
 const popup = document.getElementById("topicNameContainer");
 const inputTopicBox = document.getElementById('inputTopicName');
 addTopic.addEventListener('click', () => {
     popup.style.display = "flex";
     inputTopicBox.focus();
-
 })
 
 // Cancel popup functions
@@ -39,7 +47,10 @@ button.addEventListener("click", function(){
 
     appendTopic(topicName);
     document.getElementById("inputTopicName").value = "";
-    createCollection(topicName);
+
+    branch = topicName;
+    branchList.push(topicName);
+    addTopicToDatabase(topicName);
 })
 
 document.addEventListener('keydown', (event) => {
@@ -48,32 +59,40 @@ document.addEventListener('keydown', (event) => {
 
         appendTopic(topicName);
         document.getElementById("inputTopicName").value = "";
-        createCollection(topicName);
+
+        branch = topicName;
+        branchList.push(topicName);
+        addTopicToDatabase(topicName);
     }
 })
 
-function createCollection(name) {
-    name = name.replace(' ', '-')
-    fetch(`http://localhost:3000/createCollection?name=notes/${name}`)
-        .then(() => {
-            console.log('Created collection from frontend');
+function addTopicToDatabase(name) {
+    fetch('http://localhost:3000/topics', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            'topicName': name
         })
+    })
         .catch(error => {
             console.log('Failed to create collection from frontend')
         })
 }
 
 // Load notes
-fetch('http://localhost:3000/notes')
-    .then(response => response.json())
-    .then(data => [
-        data.forEach(obj => {
-            appendNote(obj.user, obj.text);   
-        })
-    ])
-    .catch(error => {
-        console.error('Error: ', error);
-    })
+function fetchNotes(currentBranch) {
+    fetch(`http://localhost:3000/notes?branch=${currentBranch}`)
+        .then(response => response.json())
+        .then(data => [
+            data.forEach(obj => {
+                appendNote(obj.user, obj.text);   
+            })
+        ])
+        .catch(error => {
+            console.error('Error: ', error);
+        })    
+}
+fetchNotes(branch)
 
 // Write a note
 const writeNoteButton = document.getElementById('createNote');
@@ -148,9 +167,9 @@ function refreshCards() {
                         card.classList.add("card-clicked");
                         card.previousElementSibling.style.color = "white";
 
-                        const branch = card.querySelector('.topic-title').textContent;
-                        branchName.textContent = branch;
-
+                        const newBranch = card.querySelector('.topic-title').textContent;
+                        branch = newBranch;
+                        branchElement.textContent = branch;
                     })
                 })
 }

@@ -13,10 +13,18 @@ function cloneTopic(title) {
 }
 
 // Load topics from database
+let cdList = document.querySelectorAll(".topic-card");
 fetch('http://localhost:3000/topics')
     .then(res => res.json())
     .then(data => {
-        data.forEach(obj => appendTopic(obj.topicName))
+        data.forEach(obj => appendTopic(obj.topicName, condition='load'))
+
+        cdList = document.querySelectorAll(".topic-card");
+        cdList.forEach(card => {
+            card.addEventListener('click', () => {
+                topicCardFunctionWhenClicked(card, cdList);
+            });
+        });
     })
 
 // Add topic button pressed
@@ -49,8 +57,9 @@ button.addEventListener("click", function(){
     document.getElementById("inputTopicName").value = "";
 
     branch = topicName;
-    branchList.push(topicName);
-    addTopicToDatabase(topicName);
+    // branchList.push(topicName);
+    
+    // addTopicToDatabase(topicName);
 })
 
 document.addEventListener('keydown', (event) => {
@@ -61,8 +70,9 @@ document.addEventListener('keydown', (event) => {
         document.getElementById("inputTopicName").value = "";
 
         branch = topicName;
-        branchList.push(topicName);
-        addTopicToDatabase(topicName);
+        // branchList.push(topicName);
+
+        // addTopicToDatabase(topicName);
     }
 })
 
@@ -135,11 +145,44 @@ submitWrite.addEventListener('click', () => {
 
 
 // Helper Functions
-function appendTopic(name){
+function appendTopic(name, condition='add'){
+    const currCardList = cdList;
     topicsSection.append(cloneTopic(name));
-    
+    cdList = document.querySelectorAll(".topic-card");
+
     popup.style.display = "none";
-    refreshCards();
+    if (condition === 'add') {
+        refreshCards(currCardList, cdList);
+    }
+}
+
+function refreshCards(list, newlist) {
+    list.forEach(card => {
+        card.removeEventListener('click', () => {
+            topicCardFunctionWhenClicked(card, list);
+        });
+    })
+
+    newlist.forEach(card => {
+        card.addEventListener("click", () => {
+            topicCardFunctionWhenClicked(card, newlist);
+        })
+    })
+}
+
+function topicCardFunctionWhenClicked(card, list) {
+    list.forEach(x => {
+        x.classList.remove("card-clicked");
+        const sibling = x.previousElementSibling;
+
+        sibling.style.color = "grey";
+    });
+    card.classList.add("card-clicked");
+    card.previousElementSibling.style.color = "white";
+
+    const newBranch = card.querySelector('.topic-title').textContent;
+    branch = newBranch;
+    branchElement.textContent = branch;
 }
 
 function appendNote(user, text) {
@@ -154,25 +197,6 @@ function appendNote(user, text) {
     main.append(clone);
 }
 
-function refreshCards() {
-    const cardList = document.querySelectorAll(".topic-card")
-    cardList.forEach(card => {
-            card.addEventListener("click", () => {
-                    cardList.forEach(x => {
-                            x.classList.remove("card-clicked");
-                            const sibling = x.previousElementSibling;
-                
-                            sibling.style.color = "grey";
-                        });
-                        card.classList.add("card-clicked");
-                        card.previousElementSibling.style.color = "white";
-
-                        const newBranch = card.querySelector('.topic-title').textContent;
-                        branch = newBranch;
-                        branchElement.textContent = branch;
-                    })
-                })
-}
 
 function writeNoteToDatabase(user, text) {
     fetch('http://localhost:3000/notes', {

@@ -67,7 +67,7 @@ connectToDB((err) => {
 app.get('/notes', (req, res) => {
     db.collection('notes')
         .find({
-            value: req.query.branch
+            topic: req.query.branch
         })
         .toArray()
         .then(data => {

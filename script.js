@@ -3,11 +3,29 @@ const addTopic = document.getElementById('add-topic');
 const topicsSection = document.getElementById('topics-section');
 const writeNoteBG = document.getElementById('writeNoteBackground');
 
+const branchElement = document.getElementById('branch');
+let branch = branchElement.textContent;
+
 function cloneTopic(title) {
     const clone = document.querySelector('#topic-template').content.cloneNode(true);
     clone.querySelector(".topic-title").innerHTML = title;
     return clone;
 }
+
+// Load topics from database
+let cdList = document.querySelectorAll(".topic-card");
+fetch('http://localhost:3000/topics')
+    .then(res => res.json())
+    .then(data => {
+        data.forEach(obj => appendTopic(obj.topicName, condition='load'))
+
+        cdList = document.querySelectorAll(".topic-card");
+        cdList.forEach(card => {
+            card.addEventListener('click', () => {
+                topicCardFunctionWhenClicked(card, cdList);
+            });
+        });
+    })
 
 // Add topic button pressed
 const popup = document.getElementById("topicNameContainer");
@@ -15,7 +33,6 @@ const inputTopicBox = document.getElementById('inputTopicName');
 addTopic.addEventListener('click', () => {
     popup.style.display = "flex";
     inputTopicBox.focus();
-
 })
 
 // Cancel popup functions
@@ -34,27 +51,58 @@ document.addEventListener('keydown', (event) => {
 // Submit topic name
 const button = document.getElementById("submitTopicName");
 button.addEventListener("click", function(){
-    appendTopic();
+    const topicName = document.getElementById("inputTopicName").value;
+
+    appendTopic(topicName);
+    document.getElementById("inputTopicName").value = "";
+
+    branch = topicName;
+    // branchList.push(topicName);
+    
+    // addTopicToDatabase(topicName);
 })
 
 document.addEventListener('keydown', (event) => {
     if ((event.keyCode === 13) && (popup.style.display === "flex")) {
-        appendTopic();
+        const topicName = document.getElementById("inputTopicName").value;
+
+        appendTopic(topicName);
         document.getElementById("inputTopicName").value = "";
+
+        branch = topicName;
+        // branchList.push(topicName);
+
+        // addTopicToDatabase(topicName);
     }
 })
 
-// Load notes
-fetch('http://localhost:3000/notes')
-    .then(response => response.json())
-    .then(data => [
-        data.forEach(obj => {
-            appendNote(obj.user, obj.text);   
+function addTopicToDatabase(name) {
+    fetch('http://localhost:3000/topics', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            'topicName': name
         })
-    ])
-    .catch(error => {
-        console.error('Error: ', error);
     })
+        .catch(error => {
+            console.log('Failed to create collection from frontend')
+        })
+}
+
+// Load notes
+function fetchNotes(currentBranch) {
+    fetch(`http://localhost:3000/notes?branch=${currentBranch}`)
+        .then(response => response.json())
+        .then(data => [
+            data.forEach(obj => {
+                appendNote(obj.user, obj.text);   
+            })
+        ])
+        .catch(error => {
+            console.error('Error: ', error);
+        })    
+}
+fetchNotes(branch)
 
 // Write a note
 const writeNoteButton = document.getElementById('createNote');
@@ -97,12 +145,44 @@ submitWrite.addEventListener('click', () => {
 
 
 // Helper Functions
-function appendTopic(){
-    const inputName = document.getElementById("inputTopicName").value;
-    topicsSection.append(cloneTopic(inputName));
-    
+function appendTopic(name, condition='add'){
+    const currCardList = cdList;
+    topicsSection.append(cloneTopic(name));
+    cdList = document.querySelectorAll(".topic-card");
+
     popup.style.display = "none";
-    refreshCards();
+    if (condition === 'add') {
+        refreshCards(currCardList, cdList);
+    }
+}
+
+function refreshCards(list, newlist) {
+    list.forEach(card => {
+        card.removeEventListener('click', () => {
+            topicCardFunctionWhenClicked(card, list);
+        });
+    })
+
+    newlist.forEach(card => {
+        card.addEventListener("click", () => {
+            topicCardFunctionWhenClicked(card, newlist);
+        })
+    })
+}
+
+function topicCardFunctionWhenClicked(card, list) {
+    list.forEach(x => {
+        x.classList.remove("card-clicked");
+        const sibling = x.previousElementSibling;
+
+        sibling.style.color = "grey";
+    });
+    card.classList.add("card-clicked");
+    card.previousElementSibling.style.color = "white";
+
+    const newBranch = card.querySelector('.topic-title').textContent;
+    branch = newBranch;
+    branchElement.textContent = branch;
 }
 
 function appendNote(user, text) {
@@ -117,21 +197,6 @@ function appendNote(user, text) {
     main.append(clone);
 }
 
-function refreshCards() {
-    const cardList = document.querySelectorAll(".topic-card")
-    cardList.forEach(card => {
-            card.addEventListener("click", () => {
-                    cardList.forEach(x => {
-                            x.classList.remove("card-clicked");
-                            const sibling = x.previousElementSibling;
-                
-                            sibling.style.color = "grey";
-                        });
-                        card.classList.add("card-clicked");
-                        card.previousElementSibling.style.color = "white";
-                    })
-                })
-}
 
 function writeNoteToDatabase(user, text) {
     fetch('http://localhost:3000/notes', {

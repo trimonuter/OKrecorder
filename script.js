@@ -91,6 +91,8 @@ function addTopicToDatabase(name) {
 
 // Load notes
 function fetchNotes(currentBranch) {
+    currentNotes = document.querySelectorAll('.user-post');
+    currentNotes.forEach(note => note.remove())
     fetch(`http://localhost:3000/notes?branch=${currentBranch}`)
         .then(response => response.json())
         .then(data => [
@@ -183,6 +185,8 @@ function topicCardFunctionWhenClicked(card, list) {
     const newBranch = card.querySelector('.topic-title').textContent;
     branch = newBranch;
     branchElement.textContent = branch;
+
+    fetchNotes(branch);
 }
 
 function appendNote(user, text) {
